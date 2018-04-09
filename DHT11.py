@@ -3,7 +3,7 @@ import RPi.GPIO as GPIO
 from time import sleep
 
 
-class DHT11:
+class DHT11Sensor:
 
     channel = 16        # Pin 16
     total_temp = 0      # Totaled summed temperature readings to be averaged
@@ -20,39 +20,41 @@ class DHT11:
         sleep(0.02)
         GPIO.output(self.channel, GPIO.HIGH)
         GPIO.setup(self.channel, GPIO.IN)
+        print('End of DHT init')
 
     def __read_sensor__(self):
-
+        print('Starting sensor reading')
         # Data will be 40 segment (bit) list #
         data = []
+        j = 0
 
         # Average verified data from 5 attempts #
-        for attempts in range(5):
+        #for attempts in range(5):
 
             # Break through no matter what #
+        while GPIO.input(self.channel) == GPIO.LOW:
+            continue
+        while GPIO.input(self.channel) == GPIO.HIGH:
+            continue
+
+        # Fill list based on high/low signals #
+        while j < 40:
+            k = 0
             while GPIO.input(self.channel) == GPIO.LOW:
                 continue
+
             while GPIO.input(self.channel) == GPIO.HIGH:
-                continue
-
-            # Fill list based on high/low signals #
-            list_bits = 0
-            while list_bits < 40:
-                k = 0
-                while GPIO.input(self.channel) == GPIO.LOW:
-                    continue
-
-                while GPIO.input(self.channel) == GPIO.HIGH:
-                    k += 1
-                    if k > 100:
-                        break
+                k += 1
+                if k > 100:
+                    break
 
                 if k < 8:
                     data.append(0)
                 else:
                     data.append(1)
 
-                list_bits += 1
+                j += 1
+                print('Sensor is working')
 
             # Copy lists from data into variables #
             humidity_bit = data[0:8]
@@ -80,9 +82,9 @@ class DHT11:
             tmp = humidity + humidity_point + temperature + temperature_point
 
             if check == tmp:
-                self.valid_count += 1
-                self.total_temp += temperature
-                self.total_humidity += humidity
+                #self.valid_count += 1
+                #self.total_temp += temperature
+                #self.total_humidity += humidity
                 print("temperature : ", temperature, ", humidity : ", humidity)
             else:
                 # Print values and error #
@@ -90,11 +92,11 @@ class DHT11:
                 print("temperature : ", temperature, ", humidity : ", humidity, " check : ", check, " tmp : ", tmp)
 
         # Make sure at least one reading was valid #
-        if self.valid_count == 0:
-            self.__read_sensor__()  # If not, try again
+        #if self.valid_count == 0:
+            #self.__read_sensor__()  # If not, try again
 
         # Get the average verified values for accuracy #
-        temperature = self.total_temp / self.valid_count
-        humidity = self.total_humidity / self.valid_count
+        #temperature = self.total_temp / self.valid_count
+        #humidity = self.total_humidity / self.valid_count
 
         return temperature, humidity

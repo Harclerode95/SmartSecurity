@@ -4,7 +4,7 @@ from time import sleep
 
 
 class Alarm:
-    ALARM_PIN = 13  # Needs a valid pin
+    ALARM_PIN = 24  # Needs a valid pin
 
     def __init__(self):
         GPIO.setmode(GPIO.BOARD)  # Numbers pins by physical location
@@ -13,7 +13,7 @@ class Alarm:
 
     def __buzzer_loop__(self):
         # Buzz twice per second #
-        while True:
+        for i in range(2):
             GPIO.output(self.ALARM_PIN, GPIO.LOW)
             sleep(0.5)
             GPIO.output(self.ALARM_PIN, GPIO.HIGH)

@@ -12,8 +12,8 @@ class Keypad:
         ["*", 0, "#", "D"]
     ]
 
-    ROW = [11, 12, 13, 15]
-    COLUMN = [16, 18, 22, 7]
+    ROW = [21, 19, 22, 15]
+    COLUMN = [18, 13, 5, 3]
 
     def __init__(self):
         GPIO.setmode(GPIO.BOARD)
@@ -64,6 +64,8 @@ class Keypad:
         # Return the value of the key pressed
         self.exit()
         return self.KEYPAD[row_val][col_val]
+
+
 
     def exit(self):
         # Reinitialize all rows and columns as input at exit

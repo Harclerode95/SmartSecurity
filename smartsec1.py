@@ -21,7 +21,7 @@ import LEDs                 # LEDs for status and alert
 #  Class Instantiations  #
 lcd = lcdDisplay.AdafruitCharLCD()      # LCD
 kp = matrixKeypad.Keypad()              # Keypad
-stpr = stepperMotor.StepperMotor()      # Stepper Motor
+stepper = stepperMotor.StepperMotor()      # Stepper Motor
 pir = PIR.PIR()                         # Motion Detector
 dht = DHT11.DHT11()                     # Temperature and humidity sensor
 led = LEDs.LED()                        # Status/Alert LEDs
@@ -267,6 +267,7 @@ def __get_max_safe_temp__():
     max_safe_temp = max_st + ones
 
     return max_safe_temp
+
 
 def __get_min_safe_humidity__():
     min_safe_hum = 0

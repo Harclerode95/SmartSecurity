@@ -44,7 +44,7 @@ class AdafruitCharLCD:
 
     PIN_RS = 23
     PIN_E = 29
-    PINS_DB = [32, 36, 38, 40]
+    PINS_DB = [31, 33, 35, 37]
 
     def __init__(self):
         GPIO.setwarnings(False)

@@ -1,6 +1,6 @@
 #!/usr/bin/python
 import RPi.GPIO as GPIO
-
+from time import sleep
 
 class LED:
     PWR_LED = 26
@@ -15,7 +15,11 @@ class LED:
         GPIO.output(self.PWR_LED, GPIO.HIGH)        # Set pin to high (3.3v) to power off LED
 
     def __turn_on_pwr_led__(self):
+        print('Turning power led on')
+        GPIO.output(self.PWR_LED, GPIO.HIGH)
+        sleep(0.5)
         GPIO.output(self.PWR_LED, GPIO.LOW)
+        sleep(0.5)
 
     def __setup_network_led__(self):
         GPIO.setmode(GPIO.BOARD)

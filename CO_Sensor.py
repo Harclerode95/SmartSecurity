@@ -6,13 +6,13 @@ import RPi.GPIO as GPIO
 
 
 class COSensor:
-    CO_PIN = 7     # Needs valid pin
+    CO_PIN = 40     # Needs valid pin
 
     def __init__(self):
         GPIO.setmode(GPIO.BOARD)
         GPIO.setup(self.CO_PIN, GPIO.IN, pull_up_down = GPIO.PUD_DOWN)
-        GPIO.add_event_detect(7, GPIO.RISING)
-        # GPIO.add_event_callback(7, action)
+        GPIO.add_event_detect(self.CO_PIN, GPIO.RISING)
+        GPIO.add_event_callback(self.CO_PIN, action)
 
     def __action__(self, pin):              # Parameters?
         print('Sensor detected action!')
