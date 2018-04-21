@@ -8,44 +8,57 @@
 # !/usr/bin/python           # Script in Python interpreter
 import RPi.GPIO as GPIO     # For Raspberry Pi GPIO utilization
 import time
+from picamera import PiCamera
 
 #  Import project specific files #
-#import LCD_Display           # Printing to LCD
+import LCD_Display           # Printing to LCD
 import MatrixKeypad         # Handing the keypad IO
 import DHT11                # Temperature and humidity sensor
 import PIR                  # Pyroelectric Infrared Motion Detector
 import LEDs                 # LEDs for status and alert
 import Alarm                # Alarm (buzzer/LED)
-#import CO_Sensor            # Carbon Monoxide detection
-
-#####################################################################
-#dht = DHT11.DHT11Sensor()
+import CO_Sensor            # Carbon Monoxide detection
+####################################################################
 #  Class Instantiations  #
-#lcd = LCD_Display.AdafruitCharLCD()     # LCD
+
 kp = MatrixKeypad.keypad()              # Keypad
 pir = PIR.PIR()                         # Motion Detector
 #dht = DHT11.DHT11Sensor()                # Temperature and humidity sensor
 led = LEDs.LED()                        # Status/Alert LEDs
 #alarm = Alarm.Alarm()                   # Alarm (buzzer)
-#co = CO_Sensor.COSensor()               # Carbon Monoxide Sensor
+co = CO_Sensor.COSensor()               # Carbon Monoxide Sensor
+lcd = LCD_Display.AdafruitCharLCD()
+
 
 def main():
 
-    
+    #camera = PiCamera()
+
+    #camera.start_preview()
+    #sleep(10)
+    #camera.stop_preview()
     
     DHT11.read_sensor() # works, just needs averaging to handle occassional misreading
 
-    __pir_test__()      # "functional" 
+    #__pir_test__()      # "functional" 
+
+    #keypad_test()       # works fine
+
+    #led_test()          # works
 
     #__lcd_test__()
 
-    keypad_test()
+    #lcd.message('LCD TEST')
 
-    led_test()
+    #time.sleep(1)
+
+    #GPIO.cleanup(21)
 
     #__co_test__()
 
     #__alarm_test__()
+
+    GPIO.cleanup()
 
     print("end main")
 
@@ -64,16 +77,31 @@ def __co_test__():
 def led_test():
     print('LED test')
     led.__setup_pwr_led__()
+    led.__setup_network_led__()
+    led.__setup_alarm_g_led__()
+    led.__setup_alarm_y_led__()
+    led.__setup_alarm_r_led__()
     for i in range(3):
         led.__turn_on_pwr_led__()
+        led.__turn_on_network_led__()
+        led.__turn_on_alarm_g_led__()
+        led.__turn_on_alarm_y_led__()
+        led.__turn_on_alarm_r_led__()
     print('LED test end')
 
 
 def __lcd_test__():
     print('LCD test')
     lcd.__init__()
+    lcd.__clear__()
     lcd.message('TEST')
-    time.sleep(5)
+    time.sleep(0.5)
+
+    lcd.__clear__()
+    lcd.message('TEST2')
+    time.sleep(0.5)
+
+    
     print('LCD test end')
 
 def __alarm_test__():

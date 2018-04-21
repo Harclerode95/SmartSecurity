@@ -42,13 +42,13 @@ class AdafruitCharLCD:
     LCD_5x10DOTS = 0x04
     LCD_5x8DOTS = 0x00
 
-    PIN_RS = 23
-    PIN_E = 29
-    PINS_DB = [31, 33, 35, 37]
+    PIN_RS = 11
+    PIN_E = 5
+    PINS_DB = [6, 13, 19, 26]
 
     def __init__(self):
         GPIO.setwarnings(False)
-        GPIO.setmode(GPIO.BOARD)
+        GPIO.setmode(GPIO.BCM)
         GPIO.setup(self.PIN_E, GPIO.OUT)
         GPIO.setup(self.PIN_RS, GPIO.OUT)
 
