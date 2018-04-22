@@ -12,7 +12,7 @@ from picamera import PiCamera
 
 #  Import project specific files #
 import LCD_Display           # Printing to LCD
-import MatrixKeypad         # Handing the keypad IO
+import Matrix_Keypad         # Handing the keypad IO
 import DHT11                # Temperature and humidity sensor
 import PIR                  # Pyroelectric Infrared Motion Detector
 import LEDs                 # LEDs for status and alert
